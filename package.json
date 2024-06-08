@@ -1,6 +1,6 @@
 {
   "name": "wallact",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "This TypeScript library provides a simplified interface for interacting with smart contracts on the Ethereum blockchain.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -44,5 +44,8 @@
   "homepage": "https://github.com/lakshyakumar/wallact#readme",
   "dependencies": {
     "ethers": "^6.13.0"
-  }
+  },
+  "files": [
+    "dist/"
+  ]
 }
