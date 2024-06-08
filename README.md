@@ -32,7 +32,7 @@ npm i wallact
 To read data from a smart contract, use the `readContract` method. This method requires the name of the contract method you wish to call and an array of arguments for that method.
 
 ```typescript
-import { Wallact } from "./path/to/library";
+import { Wallact } from "wallact";
 
 async function readData() {
   const contractInterface = new Wallact(
