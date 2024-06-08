@@ -1,0 +1,48 @@
+{
+  "name": "wallact",
+  "version": "1.0.0",
+  "description": "This TypeScript library provides a simplified interface for interacting with smart contracts on the Ethereum blockchain.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "npx jest --detectOpenHandles --forceExit"
+  },
+  "keywords": [
+    "nodejs",
+    "npm-package",
+    "typescript",
+    "jest",
+    "package",
+    "blockchain",
+    "ethereum",
+    "ethers.js",
+    "web3",
+    "solidity",
+    "api",
+    "wrapper",
+    "write-contract",
+    "read-contract",
+    "interact-with-contract"
+  ],
+  "author": "lakshyakumar",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.2",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lakshyakumar/wallact.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lakshyakumar/wallact/issues"
+  },
+  "homepage": "https://github.com/lakshyakumar/wallact#readme",
+  "dependencies": {
+    "ethers": "^6.13.0"
+  }
+}

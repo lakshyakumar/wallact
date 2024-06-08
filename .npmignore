@@ -1,0 +1,16 @@
+# Test files
+tests/
+*.test.js
+*.spec.js
+
+# Test configuration
+jest.config.js
+__mocks__/
+__fixtures__/
+
+# Other common directories and files to exclude
+node_modules/
+.nyc_output/
+coverage/
+*.log
+.DS_Store
