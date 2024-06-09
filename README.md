@@ -19,13 +19,25 @@ This TypeScript library provides a simplified interface for interacting with sma
 
 ### Installation
 
-1. Install with npm:
+1. Install with [npm](https://www.npmjs.com/package/wallact):
 
 ```bash
 npm i wallact
 ```
 
 ### Usage
+
+#### Creating Keys for Wallet
+
+To create keys for a new wallet, use the `createWallet` method. This method generates a new wallet including a private key and address.
+
+```typescript
+import { Wallact } from "wallact";
+
+const wallet = Wallact.createWallet();
+console.log(`Wallet Address: \${wallet.address}`);
+console.log(`Private Key: \${wallet.privateKey}`);
+```
 
 #### Reading from a Smart Contract
 

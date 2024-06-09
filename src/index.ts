@@ -45,6 +45,32 @@ export class Wallact {
         }
     }
 
+    static createWallet(userId: string, SHARD = "anyShard"): { privateKey: string; address: string } {
+        // Use the shard and userId to create a unique, deterministic seed
+        // Note: In a real application, ensure the seed generation strategy is secure
+        const seedPhrase = `${SHARD}-${userId}`;
+        const seed = ethers.id(seedPhrase);
+
+        // Generate a mnemonic from the seed. Note: This is a simplified example.
+        // In practice, you should use a more secure method for generating a mnemonic.
+        const mnemonic = ethers.Mnemonic.fromEntropy(ethers.getBytes(seed));
+
+        // For example, "m/44'/60'/0'/0/0" is a common path for Ethereum wallets.
+        const walletPath = "44'/60'/0'/0/0";
+
+        // Create an HDNode from the mnemonic
+        const hdNode = ethers.HDNodeWallet.fromMnemonic(mnemonic);
+
+        // Derive a path. The path can be adjusted to generate multiple addresses from the same seed.
+
+        const wallet = hdNode.derivePath(walletPath);
+
+        return {
+            privateKey: wallet.privateKey,
+            address: wallet.address,
+        };
+    }
+
     // Add a new entity wallet to the contractCollection
     addEntityWallet(entity: string, entityKey: string) {
         try {
