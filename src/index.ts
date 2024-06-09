@@ -1,9 +1,12 @@
 import { ethers } from "ethers";
+import { default as abi } from "../assets/contractABI.json";
 
 // Define the Wallact class to interact with smart contracts
 export class Wallact {
     // A collection to hold instances of ethers.Contract keyed by entity names
     private contractCollection: { [key: string]: ethers.Contract } = {};
+    // A collection to hold instances of ethers.Wallet keyed by entity names
+    private walletCollection : {[key: string]: ethers.Wallet} = {};
     // The smart contract's address on the blockchain
     private contractAddress: string;
     // The smart contract's ABI (Application Binary Interface)
@@ -20,6 +23,7 @@ export class Wallact {
         if (defaultEntityKey) {
             let defaultWallet = new ethers.Wallet(defaultEntityKey, new ethers.JsonRpcProvider(this.blockchainRpc));
             this.contractCollection["defaultContract"] = new ethers.Contract(contractAddress, contractABI, defaultWallet);
+            this.walletCollection["defaultWallet"] = defaultWallet;
         }
         // Always create a readContract for read-only interactions
         this.contractCollection["readContract"] = new ethers.Contract(contractAddress, contractABI, new ethers.JsonRpcProvider(this.blockchainRpc));
@@ -76,6 +80,7 @@ export class Wallact {
         try {
             let wallet = new ethers.Wallet(entityKey, new ethers.JsonRpcProvider(this.blockchainRpc));
             this.contractCollection[entity] = new ethers.Contract(this.contractAddress, this.contractABI, wallet);
+            this.walletCollection[entity] = wallet;
         } catch (e: any) {
             throw new Error("Error adding entity wallet" + e.message);
         }
@@ -109,6 +114,24 @@ export class Wallact {
             return result;
         } catch (e: any) {
             throw new Error("Error writing to the contract" + e.message);
+        }
+    }
+
+    async signMessage(message: string, entity?: string){
+        let wallet: ethers.Wallet;
+        // Determine which wallet instance to use for signing message
+        if (entity && this.walletCollection[entity]) {
+            wallet = this.walletCollection[entity];
+        } else if (this.walletCollection["defaultWallet"]) {
+            wallet = this.walletCollection["defaultWallet"];
+        } else {
+            throw new Error("No entity provided and no default wallet set");
+        }
+        try{
+           const result = await wallet.signMessage(message);
+           return result;
+        }catch (e: any) {
+            throw new Error("Error Signing message" + e.message);
         }
     }
 }
