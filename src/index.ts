@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { default as abi } from "../assets/contractABI.json";
 
 // Define the Wallact class to interact with smart contracts
 export class Wallact {
