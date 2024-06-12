@@ -39,6 +39,17 @@ console.log(`Wallet Address: \${wallet.address}`);
 console.log(`Private Key: \${wallet.privateKey}`);
 ```
 
+#### Get Wallet Address from Key
+
+To get wallet address from private key, use the `getWalletAddress` method. This will return the address.
+
+```typescript
+import { Wallact } from "wallact";
+
+const address = Wallact.getWalletAddress("0xYOUR_PRIVATE_KEY");
+console.log(`Wallet Address: \${.address}`);
+```
+
 #### Reading from a Smart Contract
 
 To read data from a smart contract, use the `readContract` method. This method requires the name of the contract method you wish to call and an array of arguments for that method.
@@ -83,6 +94,33 @@ async function writeData() {
       "arg1",
       "arg2",
     ]);
+    console.log("Transaction receipt:", receipt);
+  } catch (error) {
+    console.error("Error writing to contract:", error);
+  }
+}
+```
+
+#### Writing to a Smart Contract with transaction Confirmation
+
+To write data to a smart contract, use the `writeContractWithConfirmations` method. This method requires the name of the contract method you wish to call, an array of arguments for that method, and optionally the entity (contract instance) to use for the write operation.
+
+```typescript
+import { Wallact } from "wallact";
+
+async function writeData() {
+  const contractInterface = new Wallact(
+    "https://rpc-url/",
+    "0xContractddress",
+    contractAbi,
+    "0xYourPrivateKey"
+  );
+  try {
+    const receipt = await contractInterface.writeContractWithConfirmations(
+      "methodName",
+      ["arg1", "arg2"],
+      5
+    );
     console.log("Transaction receipt:", receipt);
   } catch (error) {
     console.error("Error writing to contract:", error);
@@ -143,6 +181,71 @@ import { Wallact } from "wallact";
 const weiAmount = BigInt("1000000000000000000"); // Example amount in Wei
 const etherAmount = Wallact.convertToEth(weiAmount.toString());
 console.log(`${weiAmount} Wei is equivalent to ${etherAmount} Ether.`);
+```
+
+#### Fetch the Latest Block Number
+
+To fetch the latest block number from the blockchain, use the `fetchLatestBlock` method. This method returns the latest block number.
+
+```typescript
+import { Wallact } from "wallact";
+
+async function fetchLatestBlockNumber() {
+  const contractInterface = new Wallact(
+    "https://rpc-url/",
+    "0xContractddress",
+    contractAbi
+  );
+  try {
+    const data = await fetchLatestBlock();
+    console.log("Latest Block Number:", data);
+  } catch (error) {
+    console.error("Error reading latest Block number:", error);
+  }
+}
+```
+
+#### Get Transaction Receipt
+
+To get the transaction receipt for a given transaction hash, use the `getTransactionReceipt` method. This method returns the transaction receipt.
+
+```typescript
+import { Wallact } from "wallact";
+
+async function getTxReceipt() {
+  const contractInterface = new Wallact(
+    "https://rpc-url/",
+    "0xContractddress",
+    contractAbi
+  );
+  try {
+    const data = await getTransactionReceipt("0xTRANSACTION_HASH");
+    console.log("Latest Block Number:", data);
+  } catch (error) {
+    console.error("Error reading transaction Receipt:", error);
+  }
+}
+```
+
+#### Wait for Transaction Confirmation
+
+To wait for a transaction to be confirmed a specified number of times, use the `waitForTransaction` method. This does not return a value but waits until the transaction has the specified number of confirmations (5 in this case).
+
+```typescript
+import { Wallact } from "wallact";
+
+async function getTxReceipt() {
+  const contractInterface = new Wallact(
+    "https://rpc-url/",
+    "0xContractddress",
+    contractAbi
+  );
+  try {
+    await waitForTransaction("0xTRANSACTION_HASH", 5);
+  } catch (error) {
+    console.error("Error reading from contract:", error);
+  }
+}
 ```
 
 ## Contributing
