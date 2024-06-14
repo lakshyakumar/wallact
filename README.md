@@ -183,6 +183,36 @@ const etherAmount = Wallact.convertToEth(weiAmount.toString());
 console.log(`${weiAmount} Wei is equivalent to ${etherAmount} Ether.`);
 ```
 
+#### Validate an Ethereum Address
+
+To check if an Ethereum address is valid, use the `isValidEthereumAddress` static method. This method takes an Ethereum address as a string argument and returns a boolean indicating whether the address is valid.
+
+```typescript
+import { Wallact } from "wallact";
+
+const address = "0x49A6F7Ece315a56C097c4Fc72F5aA2886B9c260a"; // Example Ethereum address
+const isValid = Wallact.isValidEthereumAddress(address);
+console.log(`Is the address valid? ${isValid}`);
+```
+
+#### Fetch Wallet Balance
+
+To retrieve the balance of a wallet, use the `fetchWalletBalance` method. This method takes an Ethereum address as a string argument and returns the balance of the wallet in Wei.
+
+```typescript
+import { Wallact } from "wallact";
+
+async function getWalletBalance(address: string) {
+  const wallactInstance = new Wallact("https://rpc-url/", abi); // Initialize with your provider URL
+  try {
+    const balanceWei = await wallactInstance.fetchWalletBalance(address);
+    console.log(`Balance for ${address}: ${balanceWei} Wei`);
+  } catch (error) {
+    console.error("Failed to fetch wallet balance:", error);
+  }
+}
+```
+
 #### Fetch the Latest Block Number
 
 To fetch the latest block number from the blockchain, use the `fetchLatestBlock` method. This method returns the latest block number.

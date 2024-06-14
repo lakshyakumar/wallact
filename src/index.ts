@@ -50,6 +50,21 @@ export class Wallact {
         return wallet.address;
     }
 
+    // Check if the address is valid
+    static isValidEthereumAddress(address: string): boolean {
+        return ethers.isAddress(address);
+    }
+
+    // Fetch the balance of the wallet
+    async fetchWalletBalance(address: string) {
+        try {
+            let block = await this.provider.getBalance(address);
+            return block;
+        } catch (e: any) {
+            throw new Error("Error fetching latest block" + e.message);
+        }
+    }
+
     // Fetch the latest block number from the blockchain
     async fetchLatestBlock() {
         try {
@@ -203,6 +218,4 @@ export class Wallact {
             throw new Error("Error Signing message" + e.message);
         }
     }
-
-
 }
